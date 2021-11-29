@@ -49,21 +49,11 @@ function CartProduct({ product }) {
           </div>
           <div className="flex items-center mt-6 lg:hidden lg:mt-0">
             <div className="flex-col w-1/2">
-              <Button
-                size={0}
-                bg="white"
-                className="w-8 h-8 bg-gray-200 rounded-full border text-xl">
-                -
-              </Button>
+              <CountButton >-</CountButton>
               <span className="mx-1 w-10 inline-block text-center font-semibold">
                 {product.quantity}
               </span>
-              <Button
-                size={0}
-                bg="white"
-                className="w-8 h-8 bg-gray-200  rounded-full border text-xl">
-                +
-              </Button>
+              <CountButton >+</CountButton>
             </div>
             <div className="flex-col w-1/2 text-right">
               <span className="font-semibold block">

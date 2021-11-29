@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Routes from "./Routes";
-import { createCart, setCartId } from "./store/reducer/cartSlice";
+import { createCart, retrieveCart, setCartId } from "./store/reducer/cartSlice";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -10,6 +10,7 @@ const App = () => {
         const cartId = localStorage.getItem('cart-id');
         if(cartId) {
             dispatch(setCartId(cartId));
+            dispatch(retrieveCart(cartId));
             return;
         }
         dispatch(createCart());

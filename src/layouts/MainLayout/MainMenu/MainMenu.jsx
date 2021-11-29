@@ -3,7 +3,7 @@ import Button from '../../../components/Button';
 
 export default function MainMenu({ setLeftMenuStatus }) {
   return (
-    <div className="bg-white border-t py-2">
+    <div className="bg-white border-t py-2 sticky top-0">
       <div className="container">
         <Button
         onClick={() => setLeftMenuStatus(true)}
