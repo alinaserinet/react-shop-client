@@ -1,0 +1,8 @@
+.product-prw {
+  @apply grid grid-cols-1 mx-3;
+  @apply sm:grid-cols-2 lg:gap-2;
+  @apply md:grid-cols-3 lg:gap-3;
+  @apply lg:grid-cols-4 lg:gap-4;
+  @apply xl:grid-cols-5 lg:gap-5;
+  @apply 2xl:grid-cols-6 lg:gap-6;
+}

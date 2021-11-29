@@ -1,0 +1,7 @@
+.cart-items {
+  @apply lg:flex-col lg:w-3/4 lg:mr-3;
+}
+.cart-info {
+  @apply mt-16;
+  @apply lg:flex-col lg:w-1/4 lg:ml-3 lg:mt-0;
+}

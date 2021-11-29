@@ -1,0 +1,15 @@
+.product-header {
+  @apply lg:flex;
+}
+
+.product-header .product-images {
+  @apply lg:flex-col lg:w-1/3;
+}
+
+.product-header .product-content {
+  @apply lg:flex-col lg:w-1/2;
+}
+
+.product-header .product-info {
+  @apply lg:flex-col lg:w-1/6;
+}

@@ -1,0 +1,11 @@
+.main-menu li {
+  @apply inline mx-3;
+}
+
+.main-menu li:first-child {
+  @apply ml-0;
+}
+
+.main-menu li:last-child {
+  @apply mr-0;
+}

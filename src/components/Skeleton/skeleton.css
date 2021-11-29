@@ -1,0 +1,13 @@
+.skeleton {
+  transition: all 3s;
+  animation: change-bg linear 1s infinite alternate;
+}
+
+@keyframes change-bg {
+  from {
+    @apply bg-gray-50;
+  }
+  to {
+    @apply bg-gray-100;
+  }
+}
