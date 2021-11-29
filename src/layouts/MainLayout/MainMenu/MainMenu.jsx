@@ -7,8 +7,7 @@ export default function MainMenu({ setLeftMenuStatus }) {
       <div className="container">
         <Button
         onClick={() => setLeftMenuStatus(true)}
-          className="p-0 align-middle"
-          bg="transparent"
+          className="p-0 align-middle bg-transparent"
         >
           <IoMenu
             color="gray"

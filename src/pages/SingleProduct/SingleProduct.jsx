@@ -57,9 +57,8 @@ function SingleProduct() {
                   <div className="pt-6">
                     <Button
                       onClick={addToCart}
-                      bg="purple-800"
-                      color="white"
-                      className="block w-full py-3">
+                      className="block w-full"
+                      >
                       Add To Cart
                     </Button>
                   </div>

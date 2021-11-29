@@ -1,14 +1,15 @@
 import Button from "../../Button"
 import { IoClose } from 'react-icons/io5';
+import { CountButton } from "./components";
 
-function CartProduct({product}) {
+function CartProduct({ product }) {
   let title = product.name.split(' ').slice(0, 5).join(' ');
   title += product.name.length === title.length ? "" : "...";
 
   return (
     <div className="border-b py-3">
       <div className="flex items-center">
-        
+
         <div className="flex-col w-3/12 lg:w-1/12 mr-4">
           <div
             className="bg-gray-100 bg-cover bg-center w-20 h-20 rounded-md"
@@ -31,27 +32,16 @@ function CartProduct({product}) {
             </div>
 
             <div className="flex-col hidden lg:block lg:w-1/3 text-center">
-              <Button
-                size={0}
-                bg="white"
-                className="w-8 h-8 bg-gray-200 rounded-full border text-xl">
-                -
-              </Button>
+              <CountButton >-</CountButton>
               <span className="mx-1 w-10 inline-block text-center font-semibold">
                 {product.quantity}
               </span>
-              <Button
-                size={0}
-                bg="white"
-                className="w-8 h-8 bg-gray-200  rounded-full border text-xl">
-                +
-              </Button>
+              <CountButton >+</CountButton>
             </div>
 
             <div className="flex-col w-1/2 lg:w-1/6 text-right">
               <Button
-                bg="red-300"
-                className="p-1"
+                className="p-1 bg-red-400 text-black"
               >
                 <IoClose className="ml-auto" />
               </Button>
@@ -82,7 +72,7 @@ function CartProduct({product}) {
             </div>
           </div>
         </div>
-        
+
       </div>
     </div>
   )

@@ -22,14 +22,13 @@ function ProductDetails({ description, attributes }) {
       <div className="mt-8">
         <Button
           onClick={() => changeTab(0)}
-          bg="gray-200"
-          className="py-1 px-3 w-28 mr-3" >
+          className="py-1 w-28 mr-3 bg-gray-200 text-black" >
           Description
         </Button>
         <Button
           onClick={() => changeTab(1)}
           bg="gray-200"
-          className="py-1 px-3 w-28" >
+          className="py-1 w-28 bg-gray-200 text-black" >
           Attributes
         </Button>
       </div>
