@@ -9,11 +9,22 @@ class CartApi {
     return httpClient.get(`/carts/${id}`);
   }
 
-  addItem(cartId, productId, quantity) {
+  addItem(cartId, productId, quantity = 1) {
     return httpClient.post(`/carts/${cartId}`, {
       id: productId,
       quantity
     });
+  }
+
+  updateItem(cartId, productId, quantity = 1, options = {}) {
+    return httpClient.put(`/carts/${cartId}/items/${productId}`, {
+      quantity,
+      options
+    });
+  }
+
+  deleteItem(cartId, productId) {
+    return httpClient.delete(`/carts/${cartId}/items/${productId}`);
   }
 }
 

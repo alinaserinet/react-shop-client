@@ -1,10 +1,33 @@
 import Button from "../../Button"
 import { IoClose } from 'react-icons/io5';
 import { CountButton } from "./components";
+import { useDispatch } from "react-redux";
+import { changeQuantity, deleteItem } from "../../../store/reducer/cartSlice";
 
 function CartProduct({ product }) {
   let title = product.name.split(' ').slice(0, 5).join(' ');
   title += product.name.length === title.length ? "" : "...";
+  const dispatch = useDispatch();
+
+  function deleteItemHandler() {
+    dispatch(deleteItem(product.id));
+  }
+
+  function reduceQuantity() {
+    console.log("llll");
+    dispatch(changeQuantity({
+      productId: product.id,
+      quantity: product.quantity - 1
+    }));
+  }
+
+  function increaseQuantity() {
+    console.log("llll");
+    dispatch(changeQuantity({
+      productId: product.id,
+      quantity: product.quantity + 1
+    }));
+  }
 
   return (
     <div className="border-b py-3">
@@ -32,15 +55,16 @@ function CartProduct({ product }) {
             </div>
 
             <div className="flex-col hidden lg:block lg:w-1/3 text-center">
-              <CountButton >-</CountButton>
+              <CountButton onClick={reduceQuantity}>-</CountButton>
               <span className="mx-1 w-10 inline-block text-center font-semibold">
                 {product.quantity}
               </span>
-              <CountButton >+</CountButton>
+              <CountButton onClick={increaseQuantity}>+</CountButton>
             </div>
 
             <div className="flex-col w-1/2 lg:w-1/6 text-right">
               <Button
+                onClick={deleteItemHandler}
                 className="p-1 bg-red-400 text-black"
               >
                 <IoClose className="ml-auto" />
@@ -49,11 +73,11 @@ function CartProduct({ product }) {
           </div>
           <div className="flex items-center mt-6 lg:hidden lg:mt-0">
             <div className="flex-col w-1/2">
-              <CountButton >-</CountButton>
+              <CountButton onClick={reduceQuantity}>-</CountButton>
               <span className="mx-1 w-10 inline-block text-center font-semibold">
                 {product.quantity}
               </span>
-              <CountButton >+</CountButton>
+              <CountButton onClick={increaseQuantity}>+</CountButton>
             </div>
             <div className="flex-col w-1/2 text-right">
               <span className="font-semibold block">

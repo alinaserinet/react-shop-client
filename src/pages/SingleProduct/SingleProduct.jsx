@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 import Button from "../../components/Button";
 import PageTitle from "../../components/PageTitle";
 import { MainLayout } from "../../layouts";
-import cartApi from "../../services/cartApi";
+import { addItem } from "../../store/reducer/cartSlice";
 import { fetchProductById } from "../../store/reducer/productSlice";
 import { ProductDetails } from "./components";
 import ProductImages from './ProductImages';
@@ -13,7 +13,7 @@ import './singleProduct.css';
 function SingleProduct() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { product: stateProducts, cart } = useSelector((state) => state);
+  const { product: stateProducts } = useSelector((state) => state);
   const { entities: products, loading } = stateProducts;
   const product = products[id];
 
@@ -24,7 +24,7 @@ function SingleProduct() {
   }, [dispatch, id, product]);
 
   function addToCart() {
-    cartApi.addItem(cart.id, product.id, 1);
+    dispatch(addItem(product.id));
   }
 
   return (

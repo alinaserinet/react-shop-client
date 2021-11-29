@@ -8,7 +8,7 @@ const App = () => {
 
     useEffect(() => {
         const cartId = localStorage.getItem('cart-id');
-        if(cartId) {
+        if (cartId && cartId !== 'undefined') {
             dispatch(setCartId(cartId));
             dispatch(retrieveCart(cartId));
             return;

@@ -19,24 +19,52 @@ export const createCart = createAsyncThunk(
 
 export const retrieveCart = createAsyncThunk(
   'cart/retrieve',
-  async (cartId) => {
-    const responce = await cartApi.retrieve(cartId);
+  async (_, storeApi) => {
+    const { cart } = storeApi.getState();
+    const responce = await cartApi.retrieve(cart.id);
     return responce.data;
   }
-)
+);
+
+export const addItem = createAsyncThunk(
+  'cart/addItem',
+  async (productId, storeApi) => {
+    const { cart } = storeApi.getState();
+    const responce = await cartApi.addItem(cart.id, productId);
+    return responce.data;
+  }
+);
+
+export const changeQuantity = createAsyncThunk(
+  'cart/changeQuantity',
+  async ({ productId, quantity }, storeApi) => {
+    const { cart } = storeApi.getState();
+    const responce = await cartApi.updateItem(cart.id, productId, quantity);
+    return responce.data;
+  }
+);
+
+export const deleteItem = createAsyncThunk(
+  'cart/deleteItem',
+  async (productId, storeApi) => {
+    const { cart } = storeApi.getState();
+    const responce = await cartApi.deleteItem(cart.id, productId);
+    return responce.data;
+  }
+);
 
 const cartSlice = createSlice({
   name: 'cart',
   reducers: {
     setCartId(state, action) {
-      const {payload} = action;
+      const { payload } = action;
       state.id = payload;
     }
   },
   initialState,
   extraReducers: (builder) => {
     builder.addCase(createCart.fulfilled, (state, action) => {
-      const {payload} = action;
+      const { payload } = action;
       state.id = payload.id;
       state.modifiedAt = Date.now();
       localStorage.setItem('cart-id', payload.id);
@@ -48,7 +76,34 @@ const cartSlice = createSlice({
 
     builder.addCase(retrieveCart.fulfilled, (state, action) => {
       const { payload } = action;
-      const { line_items, id, ...rest} = payload;
+      const { line_items, id, ...rest } = payload;
+      state.info = rest;
+      state.items = line_items;
+      state.modifiedAt = Date.now();
+      state.loading = false;
+    });
+
+    builder.addCase(addItem.fulfilled, (state, action) => {
+      const { payload } = action;
+      const { line_items, id, ...rest } = payload.cart;
+      state.info = rest;
+      state.items = line_items;
+      state.modifiedAt = Date.now();
+      state.loading = false;
+    });
+
+    builder.addCase(changeQuantity.fulfilled, (state, action) => {
+      const { payload } = action;
+      const { line_items, id, ...rest } = payload.cart;
+      state.info = rest;
+      state.items = line_items;
+      state.modifiedAt = Date.now();
+      state.loading = false;
+    });
+
+    builder.addCase(deleteItem.fulfilled, (state, action) => {
+      const { payload } = action;
+      const { line_items, id, ...rest } = payload.cart;
       state.info = rest;
       state.items = line_items;
       state.modifiedAt = Date.now();
