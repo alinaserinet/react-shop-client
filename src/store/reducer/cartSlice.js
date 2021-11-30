@@ -4,7 +4,7 @@ import cartApi from "../../services/cartApi";
 const initialState = {
   id: null,
   info: null,
-  items: [],
+  items: {},
   modifiedAt: null,
   loading: true
 };
@@ -35,11 +35,12 @@ export const addItem = createAsyncThunk(
   }
 );
 
-export const changeQuantity = createAsyncThunk(
-  'cart/changeQuantity',
-  async ({ productId, quantity }, storeApi) => {
+export const syncQuantities = createAsyncThunk(
+  'cart/syncQuantity',
+  async (_, storeApi) => {
     const { cart } = storeApi.getState();
-    const responce = await cartApi.updateItem(cart.id, productId, quantity);
+    const itemsArray = Object.values(cart.items);
+    const responce = await cartApi.updateItems(cart.id, itemsArray);
     return responce.data;
   }
 );
@@ -59,6 +60,11 @@ const cartSlice = createSlice({
     setCartId(state, action) {
       const { payload } = action;
       state.id = payload;
+    },
+
+    changeQuantity(state, action) {
+      const { payload } = action;
+      state.items[payload.productId].quantity = payload.quantity;
     }
   },
   initialState,
@@ -78,7 +84,7 @@ const cartSlice = createSlice({
       const { payload } = action;
       const { line_items, id, ...rest } = payload;
       state.info = rest;
-      state.items = line_items;
+      state.items = changeItemsForm(line_items);
       state.modifiedAt = Date.now();
       state.loading = false;
     });
@@ -87,16 +93,16 @@ const cartSlice = createSlice({
       const { payload } = action;
       const { line_items, id, ...rest } = payload.cart;
       state.info = rest;
-      state.items = line_items;
+      state.items = changeItemsForm(line_items);
       state.modifiedAt = Date.now();
       state.loading = false;
     });
 
-    builder.addCase(changeQuantity.fulfilled, (state, action) => {
+    builder.addCase(syncQuantities.fulfilled, (state, action) => {
       const { payload } = action;
       const { line_items, id, ...rest } = payload.cart;
       state.info = rest;
-      state.items = line_items;
+      state.items = changeItemsForm(line_items);
       state.modifiedAt = Date.now();
       state.loading = false;
     });
@@ -105,15 +111,24 @@ const cartSlice = createSlice({
       const { payload } = action;
       const { line_items, id, ...rest } = payload.cart;
       state.info = rest;
-      state.items = line_items;
+      state.items = changeItemsForm(line_items);
       state.modifiedAt = Date.now();
       state.loading = false;
     });
   }
 });
 
+function changeItemsForm(itemsArray) {
+  return itemsArray.reduce((perv, current) => (
+    {
+      ...perv,
+      [current.id]: current
+    }
+  ), {});
+}
 export const {
   setCartId,
+  changeQuantity
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

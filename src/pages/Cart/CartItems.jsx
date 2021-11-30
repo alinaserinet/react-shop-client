@@ -1,12 +1,15 @@
+import { useRef } from "react"
 import { CartProduct } from "../../components/Products"
 
 function CartItems({items}) {
+  const timer = useRef();
   return (
     <div className="cart-items">
-      {items.map((item) => (
+      {Object.keys(items).map((id) => (
         <CartProduct
-          key={item.id}
-          product={item}
+          key={id}
+          product={items[id]}
+          ref={timer}
         />
       ))}
     </div>

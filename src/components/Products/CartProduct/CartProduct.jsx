@@ -2,9 +2,11 @@ import Button from "../../Button"
 import { IoClose } from 'react-icons/io5';
 import { CountButton } from "./components";
 import { useDispatch } from "react-redux";
-import { changeQuantity, deleteItem } from "../../../store/reducer/cartSlice";
+import { changeQuantity, deleteItem, syncQuantities } from "../../../store/reducer/cartSlice";
+import React from "react";
 
-function CartProduct({ product }) {
+const CartProduct = React.forwardRef(({ product }, timer) => {
+
   let title = product.name.split(' ').slice(0, 5).join(' ');
   title += product.name.length === title.length ? "" : "...";
   const dispatch = useDispatch();
@@ -14,19 +16,29 @@ function CartProduct({ product }) {
   }
 
   function reduceQuantity() {
-    console.log("llll");
+    clearTimeout(timer.current);
+
     dispatch(changeQuantity({
       productId: product.id,
       quantity: product.quantity - 1
     }));
+
+    timer.current = setTimeout(() => {
+      dispatch(syncQuantities());
+    }, 3000);
   }
 
   function increaseQuantity() {
-    console.log("llll");
+    clearTimeout(timer.current);
+
     dispatch(changeQuantity({
       productId: product.id,
       quantity: product.quantity + 1
     }));
+
+    timer.current = setTimeout(() => {
+      dispatch(syncQuantities());
+    }, 3000);
   }
 
   return (
@@ -90,6 +102,6 @@ function CartProduct({ product }) {
       </div>
     </div>
   )
-}
+});
 
 export default CartProduct

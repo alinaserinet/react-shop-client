@@ -4,7 +4,7 @@ class CartApi {
   create() {
     return httpClient.get('/carts');
   }
-  
+
   retrieve(id) {
     return httpClient.get(`/carts/${id}`);
   }
@@ -21,6 +21,15 @@ class CartApi {
       quantity,
       options
     });
+  }
+
+  async updateItems(cartId, products) {
+    const result = await Promise.all([
+      ...products.map(async (item) => {
+        return await this.updateItem(cartId, item.id, item.quantity)
+      })
+    ]);
+    return result[result.length - 1];
   }
 
   deleteItem(cartId, productId) {
